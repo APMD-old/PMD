@@ -1,0 +1,5 @@
+[run]
+include = PMD/*
+omit = *migrations*, *tests*
+plugins =
+    django_coverage_plugin
