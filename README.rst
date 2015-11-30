@@ -4,7 +4,7 @@ PMD
 Personal Movie Database
 
 
-LICENSE: BSD
+LICENSE: MIT
 
 Settings
 ------------
