@@ -8,3 +8,8 @@ script: tox
 
 install:
   - pip install tox
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
