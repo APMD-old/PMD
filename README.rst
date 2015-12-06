@@ -1,5 +1,8 @@
 PMD
-==============================
+===
+.. image:: https://travis-ci.org/APMD/PMD.svg?branch=master
+    :target: https://travis-ci.org/APMD/PMD
+    :alt: Build Status
 
 Personal Movie Database
 
@@ -7,7 +10,7 @@ Personal Movie Database
 LICENSE: MIT
 
 Settings
-------------
+--------
 
 Moved to settings_.
 
