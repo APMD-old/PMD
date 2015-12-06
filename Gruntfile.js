@@ -10,6 +10,8 @@ module.exports = function (grunt) {
   // see: https://npmjs.org/package/time-grunt
   require('time-grunt')(grunt);
 
+  grunt.loadNpmTasks('grunt-exec');
+
   var pathsConfig = function (appName) {
     this.app = appName || appConfig.name;
 
@@ -114,7 +116,11 @@ module.exports = function (grunt) {
       },
       runMailHog: {
         cmd: './mailhog'
-      },
+      }
+    },
+
+    exec: {
+      mail: './mailhog'
     }
   });
 
@@ -122,6 +128,10 @@ module.exports = function (grunt) {
     'bgShell:runMailHog',
     'bgShell:runDjango',
     'watch'
+  ]);
+
+  grunt.registerTask('mail', [
+    'exec:mail'
   ]);
 
   grunt.registerTask('build', [
