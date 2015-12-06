@@ -50,14 +50,6 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
 
         self.services['HitchSMTP'] = hitchsmtp.HitchSMTPService(port=1025)
 
-        self.services['Django'] = hitchpython.DjangoService(
-            python=python_package.python,
-            port=8000,
-            settings="config.settings.local",
-            needs=[self.services['Postgres'], ],
-            env_vars=self.settings['environment_variables'],
-        )
-
         self.services['Redis'] = hitchredis.RedisService(
             redis_package=redis_package,
             port=16379,
@@ -68,12 +60,13 @@ class ExecutionEngine(hitchtest.ExecutionEngine):
             no_libfaketime=True,
         )
 
-#        import hitchcron
-#        self.services['Cron'] = hitchcron.CronService(
-#            run=self.services['Django'].manage("trigger").command,
-#            every=1,
-#            needs=[ self.services['Django'], ],
-#        )
+        self.services['Django'] = hitchpython.DjangoService(
+            python=python_package.python,
+            port=8000,
+            settings="config.settings.local",
+            needs=[self.services['Postgres'], ],
+            env_vars=self.settings['environment_variables'],
+        )
 
         self.services.startup(interactive=False)
 
