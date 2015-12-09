@@ -5,8 +5,8 @@ $(function() {
 
         var file = this.files[0];
 
-        if (file.size > maxFileSizeInBytes) {
-            $.bootstrapGrowl("File is too big", {
+        if (file.type != 'text/plain' && file.type != '') {
+            $.bootstrapGrowl("Only plain text files are allowed", {
                 type: 'danger',
                 align: 'center',
                 width: 'auto'
@@ -15,8 +15,8 @@ $(function() {
             return;
         }
 
-        if (file.type != 'text/plain' && file.type != '') {
-            $.bootstrapGrowl("Only text files are allowed", {
+        if (file.size > maxFileSizeInBytes) {
+            $.bootstrapGrowl("File is too big", {
                 type: 'danger',
                 align: 'center',
                 width: 'auto'
