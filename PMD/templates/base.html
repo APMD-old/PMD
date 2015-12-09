@@ -75,7 +75,7 @@
     </div>
 
     <div class="container">
-
+      <div data-alerts="alerts"></div>
       {% if messages %}
           {% for message in messages %}
               <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
@@ -103,6 +103,7 @@
       <!-- Your stuff: Third-party javascript libraries go here -->
       <script src="{% static 'js/material.min.js' %}"></script>
       <script src="{% static 'js/ripples.min.js' %}"></script>
+      <script src="{% static 'js/jquery.bootstrap-growl.min.js' %}"></script>
 
       <!-- place project specific Javascript in this file -->
       <script src="{% static 'js/project.js' %}"></script>
