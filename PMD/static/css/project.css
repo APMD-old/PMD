@@ -20,3 +20,19 @@
 
 [hidden][style="display: block;"] {
   display: block !important; }
+
+#inputFileResult {
+  margin-top: 30px;
+  display: none;
+  max-height: 400px;
+  overflow-y: scroll; }
+
+.bootstrap-growl button {
+  margin-left: 30px; }
+
+.navbar .navbar-brand {
+  height: inherit; }
+
+.navbar .navbar-nav > li > a {
+  padding-top: .425rem;
+  padding-bottom: .425rem; }
