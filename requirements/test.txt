@@ -11,5 +11,3 @@ factory_boy==2.6.0
 django-extensions==1.5.9
 django-debug-toolbar==1.4
 pytest-django==2.9.1
-
-mock
