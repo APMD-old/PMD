@@ -11,4 +11,14 @@ urlpatterns = [
         view=views.HomeView.as_view(),
         name='home'
     ),
+    url(
+        regex=r'^file_upload$',
+        view=views.FileUploadView.as_view(),
+        name='file_upload'
+    ),
+    url(
+        regex=r'^upload$',
+        view=views.FileUploadResponseView.as_view(),
+        name='upload'
+    ),
 ]
