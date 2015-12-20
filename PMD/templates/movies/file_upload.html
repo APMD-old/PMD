@@ -1,8 +1,9 @@
+{% extends "base.html" %}
 {% load staticfiles %}
-<!-- temporarily -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-<script src="{% static 'js/file-upload-helper.js' %}"></script>
+{% block title %}File Upload{% endblock %}
+
+{% block content %}
 
 <div class="container-fluid">
     <div class="row">
@@ -20,3 +21,13 @@
         <div class="jumbotron col-md-10 col-md-offset-1" id="inputFileResult"></div>
     </div>
 </div>
+
+{% endblock content %}
+
+
+{% block javascript %}
+
+{{ block.super }}
+<script src="{% static 'js/file-upload-helper.js' %}"></script>
+
+{% endblock javascript %}

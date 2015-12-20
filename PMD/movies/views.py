@@ -7,3 +7,7 @@ from django.views.generic import TemplateView
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'movies/home.html'
+
+
+class FileUploadView(LoginRequiredMixin, TemplateView):
+    template_name = 'movies/file_upload.html'
