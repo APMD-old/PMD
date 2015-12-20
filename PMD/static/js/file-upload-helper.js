@@ -1,6 +1,9 @@
 $(function() {
+    var fileText;
+
     var maxFileSizeInBytes = 100000; // 100kB
     $('#inputFile').change(function () {
+        fileText = null;
         $('#inputFileResult').hide();
 
         var file = this.files[0];
@@ -28,12 +31,13 @@ $(function() {
         var fileReader = new FileReader();
         fileReader.readAsText(file);
 
-        fileReader.onload = function (evt) {
-            $('#inputFileResult').html(evt.target.result.replace(/\n/g, '<br>'));
+        fileReader.onload = function(event) {
+            fileText = event.target.result;
+            $('#inputFileResult').html(fileText.replace(/\n/g, '<br>'));
             $('#inputFileResult').show();
         }
 
-        fileReader.onerror = function (evt) {
+        fileReader.onerror = function(event) {
             $.bootstrapGrowl("Something went wrong", {
                 type: 'danger',
                 align: 'center',
@@ -41,6 +45,20 @@ $(function() {
             });
             $('#inputFile').val(null);
             $('#inputFileResult').hide();
+        }
+    });
+
+    $('#fileUploadSubmit').click(function() {
+        if (fileText == null) {
+            $.bootstrapGrowl("Choose a file", {
+                type: 'danger',
+                align: 'center',
+                width: 'auto'
+            });
+        } else {
+            $.post('upload', {text : fileText}, function(data) {
+                console.log(data);
+            });
         }
     });
 });
