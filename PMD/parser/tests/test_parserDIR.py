@@ -1,6 +1,4 @@
 from unittest import TestCase
-from mock import Mock, patch, mock_open
-import builtins
 from parsers import ParserDIR
 
 DataForTest_DIR = """
@@ -55,28 +53,15 @@ DataForTest_DIR = """
               14 katalog(ów)   2821976064 bajtów wolnych
 """
 
-data = []
-def writeDirectory_mock_(*args, **kwargs):
-    data.append(args[0])
-
 class TestParserDIR(TestCase):
-    open_ = mock_open()
 
-    @patch('parsers.ParserDIR._writeMovie', side_effect=writeDirectory_mock_)
-    @patch('parsers.ParserDIR._clearFile', return_value=None)
-    def test_readDirectories(self, mock1, mock2):
-        mymock = mock_open(read_data=DataForTest_DIR)
-        mymock.return_value.__iter__ = lambda self: self
-        mymock.return_value.__next__ = lambda self: self.readline()
+    def test_readDirectories(self):
+        extensions = ("avi","mp4","mkv")
+        parser = ParserDIR(DataForTest_DIR,extensions)
+        data = parser.readDirectories()
 
-        with patch('builtins.open', mymock):
-
-            extensions = ("avi","mp4","mkv")
-            parser = ParserDIR("","",extensions)
-            parser.readDirectories()
-
-            self.assertEqual(data[0],'./Epoka Lodowcowa/Epoka Lodowcowa.avi')
-            self.assertEqual(data[1],'./Kły/Sezon1/Kly1.mp4')
-            self.assertEqual(data[2],'./Kły/Sezon1/Kly2.avi')
-            self.assertEqual(data[3],'./Kły/Sezon2/Kly10.mp4')
-            self.assertEqual(data[4],'./Kły/Sezon2/Kly11.avi')
+        self.assertEqual(data[0],'./Epoka Lodowcowa/Epoka Lodowcowa.avi')
+        self.assertEqual(data[1],'./Kły/Sezon1/Kly1.mp4')
+        self.assertEqual(data[2],'./Kły/Sezon1/Kly2.avi')
+        self.assertEqual(data[3],'./Kły/Sezon2/Kly10.mp4')
+        self.assertEqual(data[4],'./Kły/Sezon2/Kly11.avi')

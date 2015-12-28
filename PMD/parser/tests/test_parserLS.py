@@ -1,6 +1,4 @@
 from unittest import TestCase
-from mock import Mock, patch, mock_open
-import builtins
 from parsers import ParserLS
 
 DataForTest_LS=""".:
@@ -33,31 +31,14 @@ total 0
 -rw------- 1 zdzich zdzich 0 gru 13 17:54 Kly11.avi
 """
 
-data = []
-def writeDirectory_mock_(*args, **kwargs):
-    data.append(args[0])
-
-
 class TestParserLS(TestCase):
-    open_ = mock_open()
+    def test_readDirectories(self):
+        extensions = ("avi","mp4","mkv")
+        parser = ParserLS(DataForTest_LS,extensions)
+        data = parser.readDirectories()
 
-    @patch('parsers.ParserLS._writeMovie', side_effect=writeDirectory_mock_)
-    @patch('parsers.ParserLS._clearFile', return_value=None)
-    def test_readDirectories(self, mock1, mock2):
-        mymock = mock_open(read_data=DataForTest_LS)
-        mymock.return_value.__iter__ = lambda self: self
-        mymock.return_value.__next__ = lambda self: self.readline()
-
-        with patch('builtins.open', mymock):
-
-            extensions = ("avi","mp4","mkv")
-            parser = ParserLS("","",extensions)
-            parser.readDirectories()
-
-            self.assertEqual(data[0],'./Epoka Lodowcowa/Epoka Lodowcowa.avi')
-            self.assertEqual(data[1],'./Kły/Sezon1/Kly1.mp4')
-            self.assertEqual(data[2],'./Kły/Sezon1/Kly2.avi')
-            self.assertEqual(data[3],'./Kły/Sezon2/Kly10.mp4')
-            self.assertEqual(data[4],'./Kły/Sezon2/Kly11.avi')
-
-        print(data)
+        self.assertEqual(data[0],'./Epoka Lodowcowa/Epoka Lodowcowa.avi')
+        self.assertEqual(data[1],'./Kły/Sezon1/Kly1.mp4')
+        self.assertEqual(data[2],'./Kły/Sezon1/Kly2.avi')
+        self.assertEqual(data[3],'./Kły/Sezon2/Kly10.mp4')
+        self.assertEqual(data[4],'./Kły/Sezon2/Kly11.avi')

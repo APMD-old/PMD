@@ -1,6 +1,4 @@
 from unittest import TestCase
-from mock import Mock, patch, mock_open
-import builtins
 from parsers import recognizeFileType
 
 DataForTest_LS = """.:
@@ -93,26 +91,12 @@ DataForTest_UNKNOWN = """2015-12-13  17:54                 0 Kly10.txt
 
 
 class TestRecognizeFileType(TestCase):
-    open_ = mock_open()
 
-    def test_RecognizeFileType(self):
-        mymock = mock_open(read_data=DataForTest_LS)
-        mymock.return_value.__iter__ = lambda self: self
-        mymock.return_value.__next__ = lambda self: self.readline()
+    def test_RecognizeFileType_LS(self):
+        self.assertEqual(recognizeFileType(DataForTest_LS), "LS")
 
-        with patch('builtins.open', mymock):
-            self.assertEqual(recognizeFileType(""), "LS")
+    def test_RecognizeFileType_DIR(self):
+        self.assertEqual(recognizeFileType(DataForTest_DIR), "DIR")
 
-        mymock = mock_open(read_data=DataForTest_DIR)
-        mymock.return_value.__iter__ = lambda self: self
-        mymock.return_value.__next__ = lambda self: self.readline()
-
-        with patch('builtins.open', mymock):
-            self.assertEqual(recognizeFileType(""), "DIR")
-
-        mymock = mock_open(read_data="")
-        mymock.return_value.__iter__ = lambda self: self
-        mymock.return_value.__next__ = lambda self: self.readline()
-
-        with patch('builtins.open', mymock):
-            self.assertEqual(recognizeFileType(""), "UNKNOWN")
+    def test_RecognizeFileType_UNKNOWN(self):
+        self.assertEqual(recognizeFileType(DataForTest_UNKNOWN), "UNKNOWN")

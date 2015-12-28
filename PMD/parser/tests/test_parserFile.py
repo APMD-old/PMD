@@ -1,7 +1,4 @@
 from unittest import TestCase
-from mock import Mock, patch, mock_open
-import builtins
-import parsers
 from parserFile import parserFile
 
 DataForTest_LS = """.:
@@ -95,25 +92,12 @@ DataForTest_UNKNOWN = """2015-12-13  17:54                 0 Kly10.txt
               14 katalog(ów)   2821976064 bajtów wolnych
 """
 
-data = []
-def writeDirectory_mock_(*args, **kwargs):
-    data.append(args[0])
 
 class TestParserFile(TestCase):
-    open_ = mock_open()
+     def test_readDirectories_LS(self):
 
-    @patch('parsers.ParserBase._writeMovie', side_effect=writeDirectory_mock_)
-    @patch('parsers.ParserBase._clearFile', return_value=None)
-    def test_readDirectories_LS(self, mock1, mock2):
-
-        mymock = mock_open(read_data=DataForTest_LS)
-        mymock.return_value.__iter__ = lambda self: self
-        mymock.return_value.__next__ = lambda self: self.readline()
-
-        with patch('builtins.open', mymock):
-
-            par = parserFile("","")
-            self.assertEqual(par.readDirectories(),0)
+        par = parserFile()
+        data = par.readDirectories(DataForTest_LS)
 
         self.assertEqual(data[0],'./Epoka Lodowcowa/Epoka Lodowcowa.avi')
         self.assertEqual(data[1],'./Kły/Sezon1/Kly1.mp4')
@@ -121,39 +105,24 @@ class TestParserFile(TestCase):
         self.assertEqual(data[3],'./Kły/Sezon2/Kly10.mp4')
         self.assertEqual(data[4],'./Kły/Sezon2/Kly11.avi')
 
-        data.clear()
+     def test_readDirectories_DIR(self):
 
-    @patch('parsers.ParserBase._writeMovie', side_effect=writeDirectory_mock_)
-    @patch('parsers.ParserBase._clearFile', return_value=None)
-    def test_readDirectories_DIR(self, mock1, mock2):
+        par = parserFile()
+        data = par.readDirectories(DataForTest_DIR)
 
-        mymock = mock_open(read_data=DataForTest_DIR)
-        mymock.return_value.__iter__ = lambda self: self
-        mymock.return_value.__next__ = lambda self: self.readline()
-
-        with patch('builtins.open', mymock):
-
-            par = parserFile("","")
-            self.assertEqual(par.readDirectories(),0)
-
-            self.assertEqual(data[0],'./Epoka Lodowcowa/Epoka Lodowcowa.avi')
-            self.assertEqual(data[1],'./Kły/Sezon1/Kly1.mp4')
-            self.assertEqual(data[2],'./Kły/Sezon1/Kly2.avi')
-            self.assertEqual(data[3],'./Kły/Sezon2/Kly10.mp4')
-            self.assertEqual(data[4],'./Kły/Sezon2/Kly11.avi')
-
-        data.clear()
+        self.assertEqual(data[0],'./Epoka Lodowcowa/Epoka Lodowcowa.avi')
+        self.assertEqual(data[1],'./Kły/Sezon1/Kly1.mp4')
+        self.assertEqual(data[2],'./Kły/Sezon1/Kly2.avi')
+        self.assertEqual(data[3],'./Kły/Sezon2/Kly10.mp4')
+        self.assertEqual(data[4],'./Kły/Sezon2/Kly11.avi')
 
 
-    @patch('parsers.ParserBase._writeMovie', side_effect=writeDirectory_mock_)
-    @patch('parsers.ParserBase._clearFile', return_value=None)
-    def test_readDirectories_UNKNOWN(self, mock1, mock2):
-        mymock = mock_open(read_data=DataForTest_UNKNOWN)
-        mymock.return_value.__iter__ = lambda self: self
-        mymock.return_value.__next__ = lambda self: self.readline()
 
-        with patch('builtins.open', mymock):
-            par = parserFile("","")
-            self.assertEqual(par.readDirectories(),-1)
 
-        data.clear()
+
+     def test_readDirectories_UNKNOWN(self):
+
+        par = parserFile()
+        data = par.readDirectories(DataForTest_UNKNOWN)
+
+        self.assertEqual(len(data),0)

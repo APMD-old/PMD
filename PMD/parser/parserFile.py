@@ -1,20 +1,17 @@
 import parsers
 
 class parserFile:
-    def __init__(self, inputFile, outputFile):
-        self.inputFile = inputFile
-        self.outputFile = outputFile
+    def __init__(self):
         self.extensions = ("avi","mp4","mkv")
 
-    def readDirectories(self):
-        type = parsers.recognizeFileType(self.inputFile)
+    def readDirectories(self, inputText):
+        type = parsers.recognizeFileType(inputText)
 
         if( type  == "LS" ):
-            parser = parsers.ParserLS(self.inputFile, self.outputFile,self.extensions)
+            parser = parsers.ParserLS(inputText, self.extensions)
         elif( type  == "DIR" ):
-            parser = parsers.ParserDIR(self.inputFile, self.outputFile,self.extensions)
+            parser = parsers.ParserDIR(inputText, self.extensions)
         else :
-            return -1
+            return []
 
-        parser.readDirectories()
-        return 0
+        return parser.readDirectories()
