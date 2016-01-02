@@ -1,5 +1,5 @@
 {% load staticfiles i18n %}<!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="movieApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -26,7 +26,11 @@
     {% endblock %}
 
     {% block angular %}
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="{% static 'js/angular/lib/angular.min.js' %}"></script>
+    <script src="{% static 'js/angular/lib/angular-resource.min.js' %}"></script>
+    <script src="{% static 'js/angular/movieApp/app.js' %}"></script>
+    <script src="{% static 'js/angular/movieApp/controllers.js' %}"></script>
+    <script src="{% static 'js/angular/movieApp/services.js' %}"></script>
     {% endblock %}
 
   </head>
@@ -99,6 +103,9 @@
     {% block javascript %}
       <!-- Latest JQuery -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+      <!-- Tether for bootstrap tooltips (not working fully)TODO -->
+      <script src="{% static 'js/tether.min.js' %}"></script>
 
       <!-- Latest compiled and minified JavaScript -->
       <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>

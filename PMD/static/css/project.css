@@ -36,3 +36,16 @@
 .navbar .navbar-nav > li > a {
   padding-top: .425rem;
   padding-bottom: .425rem; }
+
+.m-b {
+  margin-bottom: 20px; }
+
+.movie-container {
+  cursor: pointer; }
+
+.movie-poster img {
+  max-width: 100%; }
+
+.movie-title {
+  margin-top: 5px;
+  text-align: center; }

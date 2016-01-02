@@ -1,1 +1,20 @@
 {% extends "base.html" %}
+
+{% block content %}
+{% verbatim %}
+    <div ng-controller="MovieListController">
+        <div class="row">
+            <div class="col-md-3" ng-repeat="movie in movies">
+                <div class="movie-container well col-md-12">
+                    <div class="row movie-poster center-block">
+                        <img src="{{ movie.poster }}" class="img-responsive center-block">
+                    </div>
+                    <div class="row movie-title text-center lead">
+                        {{ movie.title }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endverbatim %}
+{% endblock content %}
