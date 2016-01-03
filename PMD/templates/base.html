@@ -41,7 +41,7 @@
       <nav class="navbar navbar-dark navbar-static-top bg-inverse">
         <div class="container">
           <a class="navbar-brand" href="/">PMD</a>
-          <button type="button" class="navbar-toggler hidden-sm-up pull-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+          <button type="button" class="navbar-toggler hidden-sm-up pull-md-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
             &#9776;
           </button>
 
@@ -56,7 +56,7 @@
               </li>
             </ul>
 
-            <ul class="nav navbar-nav pull-right">
+            <ul class="nav navbar-nav pull-md-right">
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'file_upload' %}">{% trans "File Upload" %}</a>
