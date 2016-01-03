@@ -9,20 +9,16 @@ $(function() {
         var file = this.files[0];
 
         if (file.type != 'text/plain' && file.type != '') {
-            $.bootstrapGrowl("Only plain text files are allowed", {
-                type: 'danger',
-                align: 'center',
-                width: 'auto'
+            $.bootstrapGrowl('Only plain text files are allowed', {
+                type: 'danger'
             });
             $('#inputFile').val(null);
             return;
         }
 
         if (file.size > maxFileSizeInBytes) {
-            $.bootstrapGrowl("File is too big", {
-                type: 'danger',
-                align: 'center',
-                width: 'auto'
+            $.bootstrapGrowl('File is too big', {
+                type: 'danger'
             });
             $('#inputFile').val(null);
             return;
@@ -38,10 +34,8 @@ $(function() {
         }
 
         fileReader.onerror = function(event) {
-            $.bootstrapGrowl("Something went wrong", {
-                type: 'danger',
-                align: 'center',
-                width: 'auto'
+            $.bootstrapGrowl('Something went wrong', {
+                type: 'danger'
             });
             $('#inputFile').val(null);
             $('#inputFileResult').hide();
@@ -50,10 +44,8 @@ $(function() {
 
     $('#fileUploadSubmit').click(function() {
         if (fileText == null) {
-            $.bootstrapGrowl("Choose a file", {
-                type: 'danger',
-                align: 'center',
-                width: 'auto'
+            $.bootstrapGrowl('Choose a file', {
+                type: 'danger'
             });
         } else {
             $.post('upload', {text : fileText}, function(data) {

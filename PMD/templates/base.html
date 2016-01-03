@@ -84,9 +84,15 @@
     <div class="container">
 
       {% if messages %}
-          {% for message in messages %}
-              <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
-          {% endfor %}
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    {% for message in messages %}
+                        $.bootstrapGrowl('{{ message }}', {
+                            {% if message.tags %}type: '{{ message.tags }}'{% endif %}
+                        });
+                    {% endfor %}
+                });
+            </script>
       {% endif %}
 
       {% block content %}
@@ -104,7 +110,7 @@
       <!-- Latest JQuery -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
-      <!-- Tether for bootstrap tooltips (not working fully)TODO -->
+      <!-- Tether for bootstrap tooltips (not used yet) -->
       <script src="{% static 'js/tether.min.js' %}"></script>
 
       <!-- Latest compiled and minified JavaScript -->
