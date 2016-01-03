@@ -4,9 +4,9 @@
   color: #000; }
 
 .alert-error {
-  background-color: #f2dede;
+  background-color: #f44336;
   border-color: #eed3d7;
-  color: #b94a48; }
+  color: #fff; }
 
 @media (max-width: 47.9em) {
   .navbar-nav .nav-item {
@@ -40,8 +40,10 @@
 .m-b {
   margin-bottom: 65px; }
 
-.movie-container {
-  cursor: pointer; }
+body .container .movie-container {
+  cursor: pointer;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+  -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12); }
 
 .movie-poster img {
   max-width: 100%; }

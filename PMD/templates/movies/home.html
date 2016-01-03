@@ -3,15 +3,13 @@
 {% block content %}
 {% verbatim %}
     <div ng-controller="MovieListController" ng-cloak>
-        <div class="row">
-            <div class="col-md-3" ng-repeat="movie in movies">
-                <div class="movie-container well col-md-12">
-                    <div class="row movie-poster center-block">
-                        <img ng-attr-src="{{ movie.poster }}" class="img-responsive center-block">
-                    </div>
-                    <div class="row movie-title text-center lead">
-                        {{ movie.title }}
-                    </div>
+        <div class="col-md-3 col-sm-6" ng-repeat="movie in movies">
+            <div class="col-md-12 movie-container well">
+                <div class="row movie-poster center-block">
+                    <img ng-attr-src="{{ movie.poster }}" class="center-block">
+                </div>
+                <div class="row movie-title text-center lead">
+                    {{ movie.title }}
                 </div>
             </div>
         </div>
