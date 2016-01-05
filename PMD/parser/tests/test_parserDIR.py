@@ -1,5 +1,6 @@
 from unittest import TestCase
-from parsers import ParserDIR
+
+from PMD.parser.parsers import ParserDIR
 
 DataForTest_DIR = """
  Wolumin w stacji D nie ma etykiety.
@@ -53,15 +54,15 @@ DataForTest_DIR = """
               14 katalog(ów)   2821976064 bajtów wolnych
 """
 
+
 class TestParserDIR(TestCase):
-
     def test_readDirectories(self):
-        extensions = ("avi","mp4","mkv")
-        parser = ParserDIR(DataForTest_DIR,extensions)
-        data = parser.readDirectories()
+        extensions = ("avi", "mp4", "mkv")
+        parser = ParserDIR(DataForTest_DIR, extensions)
+        data = parser.read_directories()
 
-        self.assertEqual(data[0],'./Epoka Lodowcowa/Epoka Lodowcowa.avi')
-        self.assertEqual(data[1],'./Kły/Sezon1/Kly1.mp4')
-        self.assertEqual(data[2],'./Kły/Sezon1/Kly2.avi')
-        self.assertEqual(data[3],'./Kły/Sezon2/Kly10.mp4')
-        self.assertEqual(data[4],'./Kły/Sezon2/Kly11.avi')
+        self.assertEqual(data[0], './Epoka Lodowcowa/Epoka Lodowcowa.avi')
+        self.assertEqual(data[1], './Kły/Sezon1/Kly1.mp4')
+        self.assertEqual(data[2], './Kły/Sezon1/Kly2.avi')
+        self.assertEqual(data[3], './Kły/Sezon2/Kly10.mp4')
+        self.assertEqual(data[4], './Kły/Sezon2/Kly11.avi')

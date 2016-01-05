@@ -1,5 +1,6 @@
 from unittest import TestCase
-from parserFile import parserFile
+
+from PMD.parser.file_parser import FileParser
 
 DataForTest_LS = """.:
 total 12
@@ -94,35 +95,28 @@ DataForTest_UNKNOWN = """2015-12-13  17:54                 0 Kly10.txt
 
 
 class TestParserFile(TestCase):
-     def test_readDirectories_LS(self):
+    def test_readDirectories_LS(self):
+        par = FileParser()
+        data = par.read_directories(DataForTest_LS)
 
-        par = parserFile()
-        data = par.readDirectories(DataForTest_LS)
+        self.assertEqual(data[0], './Epoka Lodowcowa/Epoka Lodowcowa.avi')
+        self.assertEqual(data[1], './Kły/Sezon1/Kly1.mp4')
+        self.assertEqual(data[2], './Kły/Sezon1/Kly2.avi')
+        self.assertEqual(data[3], './Kły/Sezon2/Kly10.mp4')
+        self.assertEqual(data[4], './Kły/Sezon2/Kly11.avi')
 
-        self.assertEqual(data[0],'./Epoka Lodowcowa/Epoka Lodowcowa.avi')
-        self.assertEqual(data[1],'./Kły/Sezon1/Kly1.mp4')
-        self.assertEqual(data[2],'./Kły/Sezon1/Kly2.avi')
-        self.assertEqual(data[3],'./Kły/Sezon2/Kly10.mp4')
-        self.assertEqual(data[4],'./Kły/Sezon2/Kly11.avi')
+    def test_readDirectories_DIR(self):
+        par = FileParser()
+        data = par.read_directories(DataForTest_DIR)
 
-     def test_readDirectories_DIR(self):
+        self.assertEqual(data[0], './Epoka Lodowcowa/Epoka Lodowcowa.avi')
+        self.assertEqual(data[1], './Kły/Sezon1/Kly1.mp4')
+        self.assertEqual(data[2], './Kły/Sezon1/Kly2.avi')
+        self.assertEqual(data[3], './Kły/Sezon2/Kly10.mp4')
+        self.assertEqual(data[4], './Kły/Sezon2/Kly11.avi')
 
-        par = parserFile()
-        data = par.readDirectories(DataForTest_DIR)
+    def test_readDirectories_UNKNOWN(self):
+        par = FileParser()
+        data = par.read_directories(DataForTest_UNKNOWN)
 
-        self.assertEqual(data[0],'./Epoka Lodowcowa/Epoka Lodowcowa.avi')
-        self.assertEqual(data[1],'./Kły/Sezon1/Kly1.mp4')
-        self.assertEqual(data[2],'./Kły/Sezon1/Kly2.avi')
-        self.assertEqual(data[3],'./Kły/Sezon2/Kly10.mp4')
-        self.assertEqual(data[4],'./Kły/Sezon2/Kly11.avi')
-
-
-
-
-
-     def test_readDirectories_UNKNOWN(self):
-
-        par = parserFile()
-        data = par.readDirectories(DataForTest_UNKNOWN)
-
-        self.assertEqual(len(data),0)
+        self.assertEqual(len(data), 0)
