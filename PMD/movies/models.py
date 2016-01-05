@@ -30,8 +30,6 @@ class MovieGenre(models.Model):
     movie_id = models.ForeignKey(Movie, on_delete=models.CASCADE)
     genre_id = models.ForeignKey(Genre, on_delete=models.CASCADE)
 
-    objects = models.Manager()
-
     def __str__(self):
         return self.genre_id
 
