@@ -21,4 +21,9 @@ urlpatterns = [
         view=views.FileUploadResponseView.as_view(),
         name='upload'
     ),
+    url(
+        regex=r'^api/movies/$',
+        view=views.MovieListView.as_view(),
+        name='movies'
+    ),
 ]

@@ -1,5 +1,5 @@
 {% load staticfiles i18n %}<!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="movieApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -26,7 +26,11 @@
     {% endblock %}
 
     {% block angular %}
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="{% static 'js/angular/lib/angular.min.js' %}"></script>
+    <script src="{% static 'js/angular/lib/angular-resource.min.js' %}"></script>
+    <script src="{% static 'js/angular/movieApp/app.js' %}"></script>
+    <script src="{% static 'js/angular/movieApp/controllers.js' %}"></script>
+    <script src="{% static 'js/angular/movieApp/services.js' %}"></script>
     {% endblock %}
 
   </head>
@@ -37,7 +41,7 @@
       <nav class="navbar navbar-dark navbar-static-top bg-inverse">
         <div class="container">
           <a class="navbar-brand" href="/">PMD</a>
-          <button type="button" class="navbar-toggler hidden-sm-up pull-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+          <button type="button" class="navbar-toggler hidden-sm-up pull-xs-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
             &#9776;
           </button>
 
@@ -52,7 +56,7 @@
               </li>
             </ul>
 
-            <ul class="nav navbar-nav pull-right">
+            <ul class="nav navbar-nav pull-xs-right">
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'file_upload' %}">{% trans "File Upload" %}</a>
@@ -80,9 +84,15 @@
     <div class="container">
 
       {% if messages %}
-          {% for message in messages %}
-              <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
-          {% endfor %}
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    {% for message in messages %}
+                        $.bootstrapGrowl('{{ message }}', {
+                            {% if message.tags %}type: '{{ message.tags }}'{% endif %}
+                        });
+                    {% endfor %}
+                });
+            </script>
       {% endif %}
 
       {% block content %}
@@ -99,6 +109,9 @@
     {% block javascript %}
       <!-- Latest JQuery -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+      <!-- Tether for bootstrap tooltips (not used yet) -->
+      <script src="{% static 'js/tether.min.js' %}"></script>
 
       <!-- Latest compiled and minified JavaScript -->
       <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>

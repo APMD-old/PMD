@@ -7,7 +7,7 @@ $mint-green: #d6e9c6;
 $black: #000;
 $pink: #f2dede;
 $dark-pink: #eed3d7;
-$red: #b94a48;
+$red: #f44336;
 
 // bootstrap alert CSS, translated to the django-standard levels of
 // debug, info, success, warning, error
@@ -19,9 +19,9 @@ $red: #b94a48;
 }
 
 .alert-error {
-  background-color: $pink;
+  background-color: $red;
   border-color: $dark-pink;
-  color: $red;
+  color: $white;
 }
 
 // This is a fix for the bootstrap4 alpha release
@@ -37,7 +37,7 @@ $red: #b94a48;
     margin-left: 0;
   }
 
-  .nav.navbar-nav.pull-right {
+  .nav.navbar-nav.pull-xs-right {
     float: none !important;
   }
 }
@@ -71,4 +71,29 @@ $red: #b94a48;
     padding-top: .425rem;
     padding-bottom: .425rem;
   }
+}
+
+.m-b {
+  margin-bottom: 65px;
+}
+
+body {
+  .container {
+    .movie-container {
+      cursor: pointer;
+      box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+      -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, .12), 0 1px 6px 0 rgba(0, 0, 0, .12);
+    }
+  }
+}
+
+.movie-poster {
+  img {
+    max-width: 100%;
+  }
+}
+
+.movie-title {
+  margin-top: 5px;
+  text-align: center;
 }

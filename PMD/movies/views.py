@@ -22,3 +22,13 @@ class FileUploadResponseView(LoginRequiredMixin, JSONResponseMixin, AjaxResponse
 
         response_dict = {'response': file_text}
         return self.render_json_response(response_dict, status=200)
+
+
+# TODO django rest framework zamiast tego
+class MovieListView(LoginRequiredMixin, JSONResponseMixin, View):
+    def get(self, request, *args, **kwargs):
+        movie_dict = {
+            'title': 'Han Solo Dies',
+            'poster': 'http://ia.media-imdb.com/images/M/MV5BOTAzODEzNDAzMl5BMl5BanBnXkFtZTgwMDU1MTgzNzE@._V1_SY317_CR0,0,214,317_AL_.jpg'
+        }
+        return self.render_json_response([movie_dict] * 12)
