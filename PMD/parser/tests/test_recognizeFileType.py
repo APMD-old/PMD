@@ -1,5 +1,6 @@
 from unittest import TestCase
-from parsers import recognizeFileType
+
+from PMD.parser.parsers import recognize_file_type, InputType
 
 DataForTest_LS = """.:
 total 12
@@ -93,10 +94,10 @@ DataForTest_UNKNOWN = """2015-12-13  17:54                 0 Kly10.txt
 class TestRecognizeFileType(TestCase):
 
     def test_RecognizeFileType_LS(self):
-        self.assertEqual(recognizeFileType(DataForTest_LS), "LS")
+        self.assertEqual(recognize_file_type(DataForTest_LS), InputType.ls)
 
     def test_RecognizeFileType_DIR(self):
-        self.assertEqual(recognizeFileType(DataForTest_DIR), "DIR")
+        self.assertEqual(recognize_file_type(DataForTest_DIR), InputType.dir)
 
     def test_RecognizeFileType_UNKNOWN(self):
-        self.assertEqual(recognizeFileType(DataForTest_UNKNOWN), "UNKNOWN")
+        self.assertEqual(recognize_file_type(DataForTest_UNKNOWN), InputType.unknown)
