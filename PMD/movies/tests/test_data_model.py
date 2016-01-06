@@ -1,7 +1,7 @@
 from test_plus.test import TestCase
 
-from PMD.movies.models import Movie, MovieGenre, Genre, Season, Episode
-from random import randrange
+from ..models import Movie, Genre
+from random import randint, choice
 import datetime
 
 
@@ -20,8 +20,8 @@ class TestMovieDataModel(TestCase):
         self.assertTrue((len(a)) == 30, 'Movies should have 10 objects')
 
     def test_query(self):
-        genre_id = Genre.objects.filter(name='Genre 1')
-        filtered = Movie.objects.filter(moviegenre__genre_id__in=genre_id)
+        genre = Genre.objects.filter(name='Genre 1')
+        filtered = Movie.objects.filter(genre=genre)
         print(filtered)
 
 
@@ -41,11 +41,14 @@ class DataProvider:
 
     @staticmethod
     def assign_movie_genre():
-        for i in range(30):
-            obj = MovieGenre(movie_id=Movie(id=i), genre_id=Genre(id=randrange(1, 10)))
-            obj.save()
+        movies = Movie.objects.all()
+        genres = Genre.objects.all()
+        for movie in movies:
+            genre = choice(genres)
+            movie.genre.add(genre)
+            movie.save()
 
     @staticmethod
     def random_date():
-        date = datetime.date(randrange(1000, 2015), randrange(1, 12), randrange(1, 28))
+        date = datetime.date(randint(1000, 2015), randint(1, 12), randint(1, 28))
         return '{:%Y-%m-%d}'.format(date)
