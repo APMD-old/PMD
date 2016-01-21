@@ -7,6 +7,9 @@ class FileParser:
         self.extensions = ("avi", "mp4", "mkv")
 
     def read_directories(self, input_text):
+        if not isinstance(input_text, str):
+            raise TypeError
+
         type = parsers.recognize_file_type(input_text)
 
         if type == InputType.ls:
