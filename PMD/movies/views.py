@@ -4,6 +4,9 @@ from __future__ import absolute_import, unicode_literals
 from allauth.socialaccount.views import LoginCancelledView
 from braces.views import LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin
 from django.views.generic import View, TemplateView
+from PMD.parser.file_parser import FileParser
+from PMD.parser.movie_parser import movies_parser
+
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -18,7 +21,11 @@ class FileUploadResponseView(LoginRequiredMixin, JSONResponseMixin, AjaxResponse
     def post_ajax(self, request, *args, **kwargs):
         file_text = request.POST['text']
 
-        # add file text parser here
+        parser = FileParser()
+        directories = parser.read_directories(file_text)
+        movies = movies_parser(directories)
+
+        # Mario can add movies to data base
 
         response_dict = {'response': file_text}
         return self.render_json_response(response_dict, status=200)
