@@ -1,11 +1,11 @@
-from PMD.externalapi import Interface
-
 import logging
+
+from PMD.externalapi import Interface
 
 log = logging.getLogger(__name__)
 
 
-class Track(Interface):
+class Trakt(Interface):
     def __init__(self, context):
         self.host = "http://api-v2launch.trakt.tv"
         self.context = context
@@ -18,17 +18,14 @@ class Track(Interface):
             'query': query
         }
 
-        # Set optional parameters
         if media:
             query['type'] = media
 
         if year:
             query['year'] = year
 
-        # Send request
         response = self.get(self.host + self.context, headers=self.headers, params=query)
 
-        # Parse response
         items = self.get_data(response, **kwargs)[0]
 
         if items is not None:
@@ -42,7 +39,7 @@ class Track(Interface):
 
 
 def main():
-    movie = Track('/search')
+    movie = Trakt('/search')
     resp = movie.query(query='Avengers', media='Movie', year='2015')
     print(resp)
 

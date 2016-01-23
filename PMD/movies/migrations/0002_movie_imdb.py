@@ -12,8 +12,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='movie',
+            model_name='Movie',
             name='imdb',
-            field=models.CharField(max_length=9, verbose_name='IMDb Id', blank=True),
+            field=models.CharField(blank=True, verbose_name='IMDb Id', max_length=9),
         ),
     ]
