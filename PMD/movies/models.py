@@ -12,6 +12,7 @@ class Movie(models.Model):
     year = models.PositiveSmallIntegerField('Year that movie was produced', blank=True)
     release_date = models.DateField('Date when that move was first displayed in cinemas', blank=True)
     is_series = models.BooleanField('Boolean to mark if a movie is a series', default=False)
+    imdb = models.CharField('IMDb Id', max_length=9, blank=True)
 
     def __str__(self):
         return self.title
