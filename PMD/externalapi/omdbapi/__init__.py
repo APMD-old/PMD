@@ -1,5 +1,6 @@
-from PMD.externalapi import Interface
 import logging
+
+from PMD.externalapi import Interface
 
 log = logging.getLogger(__name__)
 
@@ -40,7 +41,8 @@ class OmdbApi(Interface):
                     'year': items.get('Year'),
                     'release_date': items.get('Released'),
                     'is_series': items.get('Type') == 'series',
-                    'imdb': items.get('imdbID')}
+                    'imdb': items.get('imdbID'),
+                    'poster': items.get('Poster')}
 
         return None
 
