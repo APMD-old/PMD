@@ -18,6 +18,8 @@ class OmdbApi(Interface):
             query = {'t': precise_title}
         elif search:
             query = {'s': search}
+        else:
+            query = {}
 
         if media:
             query['type'] = media

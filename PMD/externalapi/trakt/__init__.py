@@ -26,9 +26,10 @@ class Trakt(Interface):
 
         response = self.get(self.host + self.context, headers=self.headers, params=query)
 
-        items = self.get_data(response, **kwargs)[0]
+        items = self.get_data(response, **kwargs)
 
         if items is not None:
+            items = items[0]
             return {'title': items.get('movie').get('title'),
                     'year': items.get('movie').get('year'),
                     'release_date': items.get('movie').get('released'),

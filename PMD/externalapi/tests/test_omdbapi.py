@@ -29,6 +29,9 @@ class TestOMBdApi(TestCase):
         movie = self.api.query(imdbid=data['imdbid'])
         self.assertTrue(movie['imdb'] == data['imdbid'])
 
+    def test_should_handle_wrong_params(self):
+        self.assertTrue(self.api.query() == 'Invalid query')
+
 
 class DataProvider:
     @staticmethod
