@@ -6,10 +6,10 @@
         <div class="col-md-3 col-sm-6" ng-repeat="movie in movies">
             <div class="col-md-12 movie-container well">
                 <div class="row movie-poster center-block">
-                    <img ng-src="{{ movie.poster }}" class="center-block">
+                    <img ng-src="{{ movie.movie.poster }}" class="center-block">
                 </div>
                 <div class="row movie-title text-center lead">
-                    {{ movie.title }}
+                    {{ movie.movie.title }}
                 </div>
             </div>
         </div>

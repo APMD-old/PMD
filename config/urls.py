@@ -7,6 +7,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from rest_framework.routers import DefaultRouter
+
+from PMD.movies.views import UserMovieViewSet
+
+router = DefaultRouter()
+router.register(r'movies', UserMovieViewSet)
 
 urlpatterns = [
     url(r'^about/$', TemplateView.as_view(template_name='movies/about.html'), name="about"),
@@ -20,6 +26,8 @@ urlpatterns = [
 
     # Your stuff: custom urls includes go here
     url(r'^', include('PMD.movies.urls')),
+
+    url(r'^api/', include(router.urls))
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

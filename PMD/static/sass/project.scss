@@ -97,3 +97,43 @@ body {
   margin-top: 5px;
   text-align: center;
 }
+
+@media (min-width: 34em) {
+  .movie-container {
+    max-height: 355px;
+  }
+  .movie-poster > img {
+    max-height: 280px;
+  }
+  .movie-title {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 48em) {
+  .movie-container {
+    height: 230px;
+    max-height: none;
+  }
+  .movie-title {
+    font-size: 1rem;
+  }
+  .movie-poster > img {
+    max-height: none;
+  }
+}
+
+@media (min-width: 62em) {
+  .movie-container {
+    height: 307px;
+  }
+}
+
+@media (min-width: 75em) {
+  .movie-container {
+    height: 390px;
+  }
+  .movie-title {
+    font-size: 1.25rem;
+  }
+}
