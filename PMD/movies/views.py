@@ -32,6 +32,8 @@ class FileUploadResponseView(LoginRequiredMixin, JSONResponseMixin, AjaxResponse
         directories = parser.read_directories(file_text)
         movies = movies_parser(directories)
 
+        log.info('Parsed {} movies'.format(len(movies)))
+
         _search_and_create_movies(movies, request.user)
 
         return self.render_json_response({}, status=200)
@@ -54,6 +56,9 @@ def _search_and_create_movies(movies, user):
 
         try:
             api_movie = api.query(precise_title=parser_movie.title, year=parser_movie.year, media=parser_movie.type)
+            if api_movie is None:
+                raise ValueError('Could not retrieve {} from external API'.format(parser_movie.title))
+
             genres = api_movie['genre']
             del api_movie['genre']
 
@@ -68,8 +73,10 @@ def _search_and_create_movies(movies, user):
 
             try:
                 user_movie = UserMovie.objects.get(movie=movie, user=user)
+                log.debug('Getting movie {} for user {}'.format(movie, user))
             except UserMovie.DoesNotExist:
                 user_movie = UserMovie(movie=movie, user=user)
+                log.debug('Creating movie {} for user {}'.format(movie, user))
             user_movie.location = parser_movie.path
             user_movie.save()
         except Exception as e:
