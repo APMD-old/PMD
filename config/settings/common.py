@@ -10,7 +10,12 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 from __future__ import absolute_import, unicode_literals
 
+import logging
+import os
+
 import environ
+
+from config.settings import RangeFilter
 
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('PMD')
@@ -235,4 +240,68 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     )
+}
+
+LOG_DIR = ROOT_DIR.root + '/logs'
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '%(asctime)s %(levelname)-8s %(name)-15s %(message)s',
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        }
+    },
+    'filters': {
+        'info': {
+            '()': RangeFilter,
+            'min': logging.INFO,
+            'max': logging.INFO
+        },
+        'warning': {
+            '()': RangeFilter,
+            'min': logging.WARNING
+        }
+    },
+    'handlers': {
+        'all': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOG_DIR + '/all.log',
+            'maxBytes': 1024 * 1024,
+            'formatter': 'simple'
+        },
+        'info': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOG_DIR + '/info.log',
+            'maxBytes': 1024 * 1024,
+            'formatter': 'simple',
+            'filters': ['info']
+        },
+        'warning': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOG_DIR + '/warning.log',
+            'maxBytes': 1024 * 1024,
+            'formatter': 'simple',
+            'filters': ['warning']
+        }
+    },
+    'loggers': {
+        'PMD': {
+            'level': 'DEBUG',
+            'handlers': ['all', 'info', 'warning'],
+            'propagate': False,
+        },
+        'django.request': {
+            'level': 'ERROR',
+            'handlers': ['warning'],
+            'propagate': False,
+        },
+        '': {
+            'level': 'WARNING',
+            'handlers': ['warning']
+        }
+    }
 }
