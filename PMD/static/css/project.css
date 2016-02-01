@@ -45,8 +45,11 @@ body .container .movie-container {
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
   -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12); }
 
-.movie-poster img {
-  max-width: 100%; }
+.movie-poster {
+  display: flex;
+  align-items: center; }
+  .movie-poster img {
+    max-width: 100%; }
 
 .movie-title {
   margin-top: 5px;
@@ -54,27 +57,32 @@ body .container .movie-container {
 
 @media (min-width: 34em) {
   .movie-container {
-    max-height: 355px; }
-  .movie-poster > img {
-    max-height: 280px; }
+    height: 420px; }
+  .movie-poster {
+    height: 330px; }
   .movie-title {
-    font-size: 1.2rem; } }
+    font-size: 1.1rem; } }
 
 @media (min-width: 48em) {
   .movie-container {
-    height: 230px;
-    max-height: none; }
+    height: 250px; }
   .movie-title {
-    font-size: 1rem; }
-  .movie-poster > img {
-    max-height: none; } }
+    font-size: .9rem; }
+  .movie-poster {
+    height: 165px; }
+    .movie-poster img {
+      max-height: none; } }
 
 @media (min-width: 62em) {
   .movie-container {
-    height: 307px; } }
+    height: 330px; }
+  .movie-poster {
+    height: 255px; } }
 
 @media (min-width: 75em) {
   .movie-container {
-    height: 390px; }
+    height: 420px; }
+  .movie-poster {
+    height: 335px; }
   .movie-title {
     font-size: 1.25rem; } }
