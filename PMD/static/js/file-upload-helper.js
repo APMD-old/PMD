@@ -48,8 +48,9 @@ $(function() {
                 type: 'danger'
             });
         } else {
-            $.post('upload', {text : fileText}, function(data) {
-                console.log(data);
+            $('#fileUploadSubmit').prop('disabled', 'disabled');
+            $.post('upload', {text: fileText}, function () {
+                window.location.href = '/';
             });
         }
     });
