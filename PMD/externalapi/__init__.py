@@ -1,6 +1,7 @@
 import logging
 
 import requests
+from datetime import date, datetime
 
 from .errors import ERRORS
 from .exceptions import ServerError, ClientError
@@ -9,7 +10,7 @@ log = logging.getLogger(__name__)
 
 
 class Interface(object):
-    path = None
+    date_format = None
 
     @staticmethod
     def get(host, headers=None, params=None):
@@ -56,3 +57,10 @@ class Interface(object):
             data = response.content
 
         return data
+
+    @classmethod
+    def parse_date(cls, date_string):
+        try:
+            return datetime.strptime(date_string, cls.date_format).date()
+        except ValueError:
+            return None
