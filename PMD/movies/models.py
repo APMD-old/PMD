@@ -19,8 +19,8 @@ class Genre(models.Model):
 class Movie(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField('Movie title', max_length=255)
-    year = models.PositiveSmallIntegerField('Year that movie was produced', blank=True)
-    release_date = models.DateField('Date when that move was first displayed in cinemas', blank=True)
+    year = models.PositiveSmallIntegerField('Year that movie was produced', blank=True, null=True)
+    release_date = models.DateField('Date when that move was first displayed in cinemas', blank=True, null=True)
     poster = models.URLField('The URL of the poster image')
     is_series = models.BooleanField('Boolean to mark if a movie is a series', default=False)
     genre = models.ManyToManyField(Genre)
@@ -33,7 +33,7 @@ class Movie(models.Model):
 @python_2_unicode_compatible
 class Season(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    year = models.PositiveSmallIntegerField('Year when season was produced', blank=True)
+    year = models.PositiveSmallIntegerField('Year when season was produced', blank=True, null=True)
     title = models.CharField('Season title', max_length=255)
     season_number = models.PositiveSmallIntegerField('Season number', null=True)
 
@@ -45,7 +45,7 @@ class Season(models.Model):
 class Episode(models.Model):
     season = models.ForeignKey(Season, on_delete=models.CASCADE)
     title = models.CharField('Episode title', max_length=255)
-    air_date = models.DateField('Date when episode was aired', blank=True)
+    air_date = models.DateField('Date when episode was aired', blank=True, null=True)
 
     def __str__(self):
         return self.title
