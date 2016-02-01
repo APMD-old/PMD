@@ -106,9 +106,9 @@ def recognize_file_type(input_text):
         i += 1
         if i > 5:
             return InputType.unknown
-        elif line == '.:':
+        elif line.startswith('total '):
             return InputType.ls
-        elif line.count('Katalog:') > 0:
+        elif 'Katalog:' in line:
             return InputType.dir
 
     return InputType.unknown

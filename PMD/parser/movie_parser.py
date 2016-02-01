@@ -1,4 +1,8 @@
+from collections import namedtuple
+
 from guessit import guessit
+
+Movie = namedtuple('Movie', ['path', 'file_name', 'type', 'title', 'year', 'series', 'season', 'episode'])
 
 
 def get_path_name(file_directories):
@@ -16,28 +20,9 @@ def guessit_parser(file_directories):
     path, name = get_path_name(file_directories)
     guess = guessit(file_directories)
 
-    dictionary = {}
-    dictionary["path"] = path
-    dictionary["file_name"] = name
-    dictionary["type"] = guess.get("type", "unknown")
-    dictionary["title"] = guess.get("title")
-    dictionary["year"] = guess.get("year")
-    dictionary["series"] = guess.get("series")
-    dictionary["season"] = guess.get("season")
-    dictionary["episode"] = guess.get("episode")
-
-    return dictionary
+    return Movie(path, name, guess.get('type', 'unknown'), guess.get('title'), guess.get('year'),
+                 guess.get('series', None), guess.get('season', None), guess.get('episode', None))
 
 
 def movies_parser(directories):
-    l = []
-    for d in directories:
-        l.append(guessit_parser(d))
-
-    return l
-
-
-
-
-
-
+    return [guessit_parser(d) for d in directories]
