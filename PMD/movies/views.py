@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from allauth.socialaccount.views import LoginCancelledView
+import logging
+
 from braces.views import LoginRequiredMixin, JSONResponseMixin, AjaxResponseMixin
 from django.views.generic import View, TemplateView
 from rest_framework import viewsets
 
-from .models import UserMovie
-from .serializers import UserMovieSerializer
+from PMD.externalapi.omdbapi import OmdbApi
 from PMD.parser.file_parser import FileParser
 from PMD.parser.movie_parser import movies_parser
+from .models import UserMovie, Movie, Genre
+from .serializers import UserMovieSerializer
 
+log = logging.getLogger(__name__)
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -29,10 +32,9 @@ class FileUploadResponseView(LoginRequiredMixin, JSONResponseMixin, AjaxResponse
         directories = parser.read_directories(file_text)
         movies = movies_parser(directories)
 
-        # Mario can add movies to data base
+        _search_and_create_movies(movies, request.user)
 
-        response_dict = {'response': file_text}
-        return self.render_json_response(response_dict, status=200)
+        return self.render_json_response({}, status=200)
 
 
 class UserMovieViewSet(viewsets.ReadOnlyModelViewSet):
@@ -42,3 +44,33 @@ class UserMovieViewSet(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         request = self.request
         return UserMovie.objects.filter(user=request.user)
+
+
+def _search_and_create_movies(movies, user):
+    api = OmdbApi()
+    for parser_movie in movies:
+        if parser_movie.type != 'movie':
+            continue
+
+        try:
+            api_movie = api.query(precise_title=parser_movie.title, year=parser_movie.year, media=parser_movie.type)
+            genres = api_movie['genre']
+            del api_movie['genre']
+
+            movie, created = Movie.objects.get_or_create(**api_movie)
+            if created:
+                movie.save()
+
+            for genre in genres:
+                g, created = Genre.objects.get_or_create(name=genre)
+                movie.genre.add(g)
+            movie.save()
+
+            try:
+                user_movie = UserMovie.objects.get(movie=movie, user=user)
+            except UserMovie.DoesNotExist:
+                user_movie = UserMovie(movie=movie, user=user)
+            user_movie.location = parser_movie.path
+            user_movie.save()
+        except Exception as e:
+            log.warn(e)
