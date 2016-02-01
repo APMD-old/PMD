@@ -95,6 +95,10 @@ DataForTest_UNKNOWN = """2015-12-13  17:54                 0 Kly10.txt
 
 
 class TestParserFile(TestCase):
+    def test_raiseError(self):
+        par = FileParser()
+        self.assertRaises(TypeError,par.read_directories,1)
+
     def test_readDirectories_LS(self):
         par = FileParser()
         data = par.read_directories(DataForTest_LS)
