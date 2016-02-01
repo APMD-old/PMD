@@ -1,6 +1,6 @@
 from test_plus.test import TestCase
 
-from PMD.externalapi.omdbapi import OmdbApi
+from ..omdbapi import OmdbApi
 
 
 class TestOMBdApi(TestCase):

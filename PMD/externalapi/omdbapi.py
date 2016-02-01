@@ -1,6 +1,6 @@
 import logging
 
-from PMD.externalapi import Interface
+from . import Interface
 
 log = logging.getLogger(__name__)
 

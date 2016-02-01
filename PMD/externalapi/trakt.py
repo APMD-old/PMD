@@ -1,6 +1,6 @@
 import logging
 
-from PMD.externalapi import Interface
+from . import Interface
 
 log = logging.getLogger(__name__)
 
@@ -37,13 +37,3 @@ class Trakt(Interface):
                     'imdb': items.get('movie').get('ids').get('imdb')}
 
         return None
-
-
-def main():
-    movie = Trakt('/search')
-    resp = movie.query(query='Avengers', media='Movie', year='2015')
-    print(resp)
-
-
-if __name__ == '__main__':
-    main()

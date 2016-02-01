@@ -2,8 +2,8 @@ import logging
 
 import requests
 
-from PMD.externalapi.errors import ERRORS
-from PMD.externalapi.exceptions import ServerError, ClientError
+from .errors import ERRORS
+from .exceptions import ServerError, ClientError
 
 log = logging.getLogger(__name__)
 
